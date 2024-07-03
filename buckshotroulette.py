@@ -5,12 +5,12 @@ pygame.init()
 som_fgatilho = pygame.mixer.Sound('fgatilho.mp3')
 som_tiro = pygame.mixer.Sound('Gunshot.mp3')
 print("="*41)
-print(" "*10, "BUCKSHOT ROULLETE")
+print(" "*10, "\033[4;31;40mBUCKSHOT ROULLETE\033[m")
 print("="*41)
-print("!!! Bem vindo a roleta russa BUCKSHOT ROULLETE !!!")
+print("\033[1;33;40m!!! Bem vindo a roleta russa BUCKSHOT ROULLETE !!!")
 print("* Escolher a ação de atirar em si resultará no benefício de pular a vez na próxima rodada")
 print("* Escolher a ação de atirar em seu oponente resultará no benefício de ganhar mais rápido kkkk")
-print("* Em seguida, escolha o tambor da arma que irá disparar")
+print("* Em seguida, escolha o tambor da arma que irá disparar\033[m")
 sleep(9)
 print("=====================")
 jogador_1=str(input("digite o nome do jogador 1: ")).strip().title()
@@ -26,7 +26,7 @@ while True:
  if carregados!=len(tambores)-2 and carregados!=len(tambores)-1 and carregados < len(tambores):
   break
 print("="*41)
-print(f"Há {len(tambores)} tambores na escopeta e {carregados} deles estão carregados!!!")
+print(f"Há \033[0;36m{len(tambores)} tambores\033[m na escopeta e\033[0;31m {carregados} deles estão carregados!!!\033[m")
 #Escolhendo "carregados" numeros aleatórios DIFERENTES da lista "tambores" para serem "selecionados com munição":
 selecionado=random.sample(tambores,k=carregados)
 #a variável jogo_ativo é igual a True, a qual mantém o jogo funcionando até que jogo_ativo seja igual a False, encerrando o programa:
@@ -34,24 +34,25 @@ jogo_ativo=True
 while jogo_ativo:
   for turno in (jogador_1,jogador_2):
     print("="*51)
-    print(f"sua vez de jogar, {turno}")
+    print(f"sua vez de jogar, \033[0;32m{turno}\033[m")
     print("numeragem dos tambores: ",tambores)
     while True:
      acao=str(input("qual será sua ação? em si/oponente: ")).strip()
      if acao!= "em si" and acao != "oponente":
        print("Opção inválida! Por favor, digite 'em si' ou 'oponente'.")
+     try:
+      escolha=int(input("escolha o número do tambor: "))
+      tambores.remove(escolha)
+     except ValueError:
+        print("Esse tambor ja foi, cabeça de pica")
      else:
        break 
-    try:
-     escolha=int(input("escolha o número do tambor: "))
-    except ValueError:
-       print("tu fez merda")
     if escolha in selecionado and acao.lower()=="em si":
       som_fgatilho.play()
       print("..... um barulho ecoa no corredor ....")
       sleep(4)
       som_tiro.play()
-      print(f"seu oponente ri ao ver a poça de sangue no chão, você morreu {turno}")
+      print(f"seu oponente ri ao ver a poça de sangue no chão, \033[0;31m você morreu {turno}\033[m")
       jogo_ativo=False
       break
     if escolha in selecionado and acao.lower()=="oponente":
@@ -59,7 +60,7 @@ while jogo_ativo:
       print("..... um barulho ecoa no corredor ....")
       sleep(4)
       som_tiro.play()
-      print(f"a presença desagradável de seu oponente chega ao fim, você vive {turno}, enquanto seu adversário descansa eternamente")
+      print(f"a presença desagradável de seu oponente chega ao fim, \033[0;32m você vive {turno}\033[m, enquanto seu adversário descansa eternamente")
       jogo_ativo=False
       break
     else:
@@ -67,5 +68,4 @@ while jogo_ativo:
       print("..... um barulho ecoa no corredor ....")
       sleep(4)
       print("Os dois continuam de pé, mas não por muito tempo...")
-    tambores.remove(escolha)
 pygame.quit()
